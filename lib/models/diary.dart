@@ -2,7 +2,7 @@ class Diary {
   final int? id;
   final String title;
   final String body;
-  final String user_id;
+  final int user_id;
 
   Diary({
     this.id,
@@ -12,7 +12,7 @@ class Diary {
   });
 
   Map<String, Object?> toMap() {
-    return {'id': id, 'title': body, 'body': body, 'user_id': user_id};
+    return {'id': id, 'name': title, 'body': body, 'user_id': user_id};
   }
 
   factory Diary.fromMap(Map<String, dynamic> map) {

@@ -1,6 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:login_application/db/database_helper.dart';
 import 'package:login_application/models/user.dart';
+import 'package:login_application/utils/navigation.dart';
+import 'package:login_application/utils/routes.dart';
 
 class WelcomeView extends StatefulWidget {
   final int userId;
@@ -16,6 +20,7 @@ class WelcomeView extends StatefulWidget {
 class _WelcomeViewState extends State<WelcomeView> {
   String name = '';
   String username = '';
+  User? user;
 
   final dbHelper = DatabaseHelper();
 
@@ -30,11 +35,12 @@ class _WelcomeViewState extends State<WelcomeView> {
     User? foundUser = await dbHelper.getUserById(id);
 
     String MyName = foundUser!.name;
-    String MyUserName = foundUser!.user;
+    String MyUserName = foundUser.user;
 
     setState(() {
       name = MyName; // Aquí debes colocar los datos obtenidos de la API
       username = MyUserName; // Aquí debes colocar los datos obtenidos de la API
+      user = foundUser;
     });
   }
 
@@ -91,6 +97,13 @@ class _WelcomeViewState extends State<WelcomeView> {
                       fontSize: 16,
                       color: Colors.grey,
                     ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigation.navigateTo(Routes.MyDiary, arguments: {'user', user!});
+                    },
+                    child: Text('Ir a Lista de Diarios'),
                   ),
                 ],
               ),
